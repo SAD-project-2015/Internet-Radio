@@ -21,5 +21,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=IRadio&amp;ivyXmlPath=ivy.xml&amp;confs=widgetset-compile&amp;ivySettingsPath=%24%7Bworkspace_loc%3AIRadio%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;ivyUserDir=&amp;propertyFiles="/>
 	<classpathentry kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=IRadio&amp;ivyXmlPath=ivy.xml&amp;confs=nodeploy&amp;ivySettingsPath=%24%7Bworkspace_loc%3AIRadio%2Fivysettings.xml%7D&amp;loadSettingsOnDemand=false&amp;ivyUserDir=&amp;propertyFiles="/>
+	<classpathentry kind="lib" path="C:/Users/Ram/Downloads/bst-player-api-2.0.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ram/Downloads/jmf-2.1.1e.jar/jmf-2.1.1e.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -1,21 +1,21 @@
 package com.example.iradio;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import java.io.File;
+
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Audio;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-
 @SuppressWarnings("serial")
 @Theme("iradio")
 public class IradioUI extends UI {
@@ -31,43 +31,56 @@ public class IradioUI extends UI {
 		final VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
 		setContent(layout);
-		layout.addComponent(getPlayer());
+		JFXPanel fxPanel = new JFXPanel();
+//		layout.addComponent(getPlayer());
+		
+		Button button = new Button("Click Me");
+		button.addClickListener(new Button.ClickListener() {
+			public void buttonClick(ClickEvent event) {
 
-//		Button button = new Button("Click Me");
-//		button.addClickListener(new Button.ClickListener() {
-//			public void buttonClick(ClickEvent event) {
-//				layout.addComponent(new Label("Thank you for clicking"));
-//			}
-//		});
-//		layout.addComponent(button);
+				String fileName="C:/Users/Ram/Desktop/sound1.mp3";
+				String uriString = new File(fileName).toURI().toString();
+				MediaPlayer player = new MediaPlayer(new Media(uriString));
+				player.play(); // or stop() or pause() etc etc
+				
+			}
+		});
+		layout.addComponent(button);
 	}
 	
-	public HorizontalLayout getPlayer(){
-		HorizontalLayout playerContainer=new HorizontalLayout();
-		Audio audio = new Audio("MyAudio");
-		audio.setSource(new ThemeResource("/IRadio/sound.mp3"));
-		playerContainer.addComponent(audio);
-		
-		StreamResource resource = new StreamResource(
-			    new StreamResource.StreamSource() {
-
-			        public InputStream getStream() {
-			            Object soundId;
-						byte[] data = getBinaryData(
-			                    soundId, BinaryDataSource.TYPE_SOUND, 0, 0);
-			            if (data == null) {
-			                return null;
-			            }
-			            return new ByteArrayInputStream(data);
-			        }
-			    }, "") {
-			        @Override
-			        public String getMIMEType() {
-			            return "audio/mp4";
-			        }
-			    };
-		
-		return playerContainer;
-	}
-
+//	public HorizontalLayout getPlayer() {
+//		HorizontalLayout playerContainer=new HorizontalLayout();
+//		SimplePanel panel = new SimplePanel();   // create panel to hold the player
+//		 AbstractMediaPlayer player = null;
+//		 try {
+//			  PlayerInfo pi = PlayerUtil.getPlayerInfo("core", "quicktime");
+//			  player = PlayerUtil.getPlayer(pi, "http://bajao.biscoot.com/onlinemusic/share/lalla-lalla-lori-256304.mp3", false, 
+//				        "width", "height");
+//		      // create the player, specifing URL of media
+////		      player = new VLCMediaPlayer("www.example.com/mediafile.wma");
+//
+//		      panel.setWidget(player); // add player to panel.
+//		 } 
+//		 catch(PluginVersionException e) {
+//		      // required plugin version is not available, alert user possibly providing a link
+//		      // to the plugin download page.
+//		      panel.setWidget(new HTML(".. some nice message telling the user to download plugin first .."));
+//		 } 
+//		 catch(PluginNotFoundException e) {
+//		      // catch PluginNotFoundException and tell user to download plugin, possibly providing
+//		      // a link to the plugin download page.
+//		      panel.setWidget(new HTML(".. another nice message telling the user to download plugin.."));
+//		 }
+//		playerContainer.addComponent((Component) panel);
+//		
+//		
+//		
+//		return playerContainer;
+//	}
+	
+//	public HorizontalLayout getPlayer() {	
+//	
+//	
+//	}
+	
 }
