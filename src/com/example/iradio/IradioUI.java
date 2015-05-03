@@ -9,12 +9,10 @@ import javafx.scene.media.MediaPlayer;
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.validator.AbstractValidator;
+//import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -37,7 +35,7 @@ public class IradioUI extends UI {
       Button loginButton;
 	
 	@WebServlet(value = "/*", asyncSupported = true)
-	@VaadinServletConfiguration(productionMode = false, ui = IradioUI.class)
+	//@VaadinServletConfiguration(productionMode = false, ui = IradioUI.class)
 	public static class Servlet extends VaadinServlet {
 	}
 

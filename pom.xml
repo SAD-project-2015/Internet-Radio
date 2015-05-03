@@ -4,26 +4,265 @@
   <artifactId>IRadio</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
+  <properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<vaadin.version>7.0.0</vaadin.version>
+		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+	</properties>
+  <dependencies>  
+ 
+   
+  <dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+  
+ <dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.1.0</version>
+</dependency>
+
+<dependency>
+	<groupId>org.apache.maven</groupId>
+	<artifactId>maven-plugin-api</artifactId>
+	<version>3.3.1</version>
+</dependency>
+
+<dependency>
+	<groupId>org.json</groupId>
+	<artifactId>json</artifactId>
+	<version>20141113</version>
+</dependency>
+
+
+
+
+  <dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client</artifactId>
+			<scope>compile</scope>
+			<version>7.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-themes</artifactId>
+			<scope>compile</scope>
+			<version>7.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client-compiled</artifactId>
+			<version>7.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+	<groupId>com.vaadin</groupId>
+	<artifactId>vaadin-shared</artifactId>
+	<version>7.5.0.alpha1</version>
+      </dependency>
+      
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-server</artifactId>
+			<version>7.0.0</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<scope>compile</scope>
+			<version>2.6</version>
+		</dependency>
+  
+  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
+    <pluginManagement>
+    
     <plugins>
+    
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven-jar-plugin.version}</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+            <excludes>
+                <exclude>VAADIN/widgetsets/WEB-INF/**</exclude>
+            </excludes>
         </configuration>
-      </plugin>
-      <plugin>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.4</version>
-        <configuration>
-          <warSourceDirectory>WebContent</warSourceDirectory>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-        </configuration>
-      </plugin>
+    </plugin>
+    
+    
+			<!-- As we are doing "inplace" GWT compilation, ensure the widgetset -->
+			<!-- directory is cleaned properly -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/webapp/VAADIN/widgetsets</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<!-- As we are doing "inplace" GWT compilation, ensure the widgetset -->
+			<!-- directory is cleaned properly -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/main/webapp/VAADIN/widgetsets</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<version>${vaadin.plugin.version}</version>
+				<configuration>
+					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+					<!-- <runTarget>mobilemail</runTarget> -->
+					<!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This 
+						way compatible with Vaadin eclipse plugin. -->
+					<webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
+					</webappDirectory>
+					<hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
+					</hostedWebapp>
+					<noServer>true</noServer>
+					<!-- Remove draftCompile when project is ready -->
+					<draftCompile>false</draftCompile>
+					<compileReport>true</compileReport>
+					<style>OBF</style>
+					<strict>true</strict>
+					<runTarget>http://localhost:8080/</runTarget>
+					<persistentunitcache>false</persistentunitcache>
+					<gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
+          </configuration>
+				<executions>
+					<execution>
+						<configuration>
+							<!-- if you don't specify any modules, the plugin will find them -->
+							<!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module> 
+								</modules> -->
+						</configuration>
+						<goals>
+							<goal>clean</goal>
+							<goal>resources</goal>
+							<goal>update-widgetset</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			
+			
+			<plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<version>${vaadin.plugin.version}</version>
+				<configuration>
+					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+					<!-- <runTarget>mobilemail</runTarget> -->
+					<!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This 
+						way compatible with Vaadin eclipse plugin. -->
+					<webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
+					</webappDirectory>
+					<hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
+					</hostedWebapp>
+					<noServer>true</noServer>
+					<!-- Remove draftCompile when project is ready -->
+					<draftCompile>false</draftCompile>
+					<compileReport>true</compileReport>
+					<style>OBF</style>
+					<strict>true</strict>
+					<runTarget>http://localhost:8080/</runTarget>
+					<persistentunitcache>false</persistentunitcache>
+					<gwtSdkFirstInClasspath>true</gwtSdkFirstInClasspath>
+          </configuration>
+				<executions>
+					<execution>
+						<configuration>
+							<!-- if you don't specify any modules, the plugin will find them -->
+							<!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module> 
+								</modules> -->
+						</configuration>
+						<goals>
+							<goal>clean</goal>
+							<goal>resources</goal>
+							<goal>update-widgetset</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+	
+		
+		
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.vaadin</groupId>
+										<artifactId>
+											vaadin-maven-plugin
+										</artifactId>
+										<versionRange>
+											[7.0.0,)
+										</versionRange>
+										<goals>
+											<goal>resources</goal>
+											<goal>update-widgetset</goal>
+											<goal>compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+      
+      
+      
     </plugins>
+   </pluginManagement>
+    
   </build>
+  
 </project>
