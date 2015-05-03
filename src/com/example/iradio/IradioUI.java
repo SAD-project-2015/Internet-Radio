@@ -1,6 +1,7 @@
 package com.example.iradio;
 
 import java.io.File;
+import java.net.URL;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
@@ -10,11 +11,9 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.validator.AbstractValidator;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -94,7 +93,11 @@ public class IradioUI extends UI {
 		playButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 
-				String fileName="C:/Users/Ram/Desktop/SAD/sound1.mp3";
+//				ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+//			    String fileName =classLoader.getResource(".").getPath()+   
+//			                                       "sound1.mp3";
+				
+				String fileName="E:/sound1.mp3";
 				String uriString = new File(fileName).toURI().toString();
 				player = new MediaPlayer(new Media(uriString));
 				player.play(); 
