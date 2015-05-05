@@ -3,30 +3,48 @@ package com.example.iradio;
 import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.Button.ClickEvent;
 @SuppressWarnings("serial")
 //@Theme("iradio")
 @PreserveOnRefresh
 public class IradioUI extends UI {
-	
+	protected static final String MAINVIEW = "main";
 	
 	
 	    Navigator navigator;
 
 	    String loggedInUser;
+	    
+	    public IradioUI(){
+	    	
+	    }
 
 	    @Override
 	    public void init(VaadinRequest request) {
-	        // Create Navigator, make it control the ViewDisplay
-	        navigator = new Navigator(this, this);
+	    	navigator = new Navigator(this, this);
 
 	        // Add some Views
 	        // no fragment for main view
-	        navigator.addView(LoginView.NAME,
-	                new LoginView(navigator,null));
+	        navigator.addView("",
+	                new LoginView(navigator,"hi"));
+	        // Create Navigator, make it control the ViewDisplay
+	    	HorizontalLayout hl=new HorizontalLayout();
+	    	hl.setSizeFull();
+	    	Button b=new Button("Go to login Page");
+	    	hl.addComponent(b);
+	    	b.addClickListener(new Button.ClickListener() {
+				public void buttonClick(ClickEvent event) {
+			
+					navigator.navigateTo(LoginView.NAME);		
+				}
+			});
+	        
 
 	        // #settings
-	        navigator.addView(RegisterView.NAME, new RegisterView());
+//	        navigator.addView(RegisterView.NAME, new RegisterView());
 
 	        // #count will be a new instance each time we navigate to it, counts:
 	        /*
