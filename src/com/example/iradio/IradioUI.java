@@ -1,79 +1,80 @@
 package com.example.iradio;
 
-import javax.servlet.annotation.WebServlet;
-
-import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.Button.ClickEvent;
 @SuppressWarnings("serial")
-@Theme("iradio")
+//@Theme("iradio")
+@PreserveOnRefresh
 public class IradioUI extends UI {
-	 Navigator navigator;
-	 String loggedInUser;
-		HorizontalLayout layout;
-    
-	 
-
-      Button loginButton,registerButton;
 	
-//	@WebServlet(value = "/*", asyncSupported = true)
-//	@VaadinServletConfiguration(productionMode = false, ui = IradioUI.class)
-//	public static class Servlet extends VaadinServlet {
-//	}
-
-	@Override
-	protected void init(VaadinRequest request) {
-		navigator = new Navigator(this, this);
-		navigator.addView(LoginView.NAME, new LoginView(navigator,""));
-		layout = new HorizontalLayout();
-		layout.addComponent(getLoginButton());
-		layout.addComponent(getRegisterButton());
-		layout.setMargin(true);
-		setContent(layout);
-		
-			}
-    
-	private Component getRegisterButton() {
-		registerButton=new Button("Register");
-		registerButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-		
-//				navigator.navigateTo(RegisterView.NAME);		
-			}
-		});
-		return registerButton;
-	}
-
-	private Component getLoginButton() {
-		loginButton=new Button("Login");
-			loginButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				getUI().getNavigator().addView("login", LoginView.class);
-				getUI().getNavigator().navigateTo("login");
-//				navigator.navigateTo(LoginView.NAME);	
-			}
-		});
-		return loginButton;
-	}
-
 	
-	 public void enter(ViewChangeEvent event) {
-		 navigator.navigateTo(LoginView.NAME);	
+	
+	    Navigator navigator;
+
+	    String loggedInUser;
+
+	    @Override
+	    public void init(VaadinRequest request) {
+	        // Create Navigator, make it control the ViewDisplay
+	        navigator = new Navigator(this, this);
+
+	        // Add some Views
+	        // no fragment for main view
+	        navigator.addView(LoginView.NAME,
+	                new LoginView(navigator,null));
+
+	        // #settings
+	        navigator.addView(RegisterView.NAME, new RegisterView());
+
+	        // #count will be a new instance each time we navigate to it, counts:
+	        /*
+	         * Commented away from other example // no fragment for main view
+	         * navigator.addView(MainView.NAME, new MainView(navigator));
+	         * 
+	         * navigator.addView(CountView.NAME, CountView.class);
+	         * 
+	         * // #message adds a label with whatever it receives as a parameter
+	         * navigator.addView(MessageView.NAME, new MessageView());
+	         * 
+	         * // #secret works as #message, but you need to be logged in
+	         * navigator.addView(SecretView.NAME, new SecretView());
+	         * 
+	         * // #login will navigate to the main view if invoked via this
+	         * mechanism navigator.addView(LoginView.NAME, new LoginView(navigator,
+	         * MainView.NAME));
+	         * 
+	         * // we'll handle permissions with a listener here, you could also do
+	         * // that in the View itself. navigator.addViewChangeListener(new
+	         * ViewChangeListener() {
+	         * 
+	         * @Override public boolean beforeViewChange(ViewChangeEvent event) { if
+	         * (((NavigationtestUI)UI.getCurrent()).getLoggedInUser() == null) { //
+	         * Show to LoginView instead, pass intended view String
+	         * fragmentAndParameters = event.getViewName(); if
+	         * (event.getParameters() != null) { fragmentAndParameters += "/";
+	         * fragmentAndParameters += event.getParameters(); }
+	         * navigator.getDisplay().showView(new LoginView(navigator,
+	         * fragmentAndParameters)); return false;
+	         * 
+	         * } else { return true; } }
+	         * 
+	         * @Override public void afterViewChange(ViewChangeEvent event) {
+	         * 
+	         * } });
+	         */
+	        // react to initial fragment, received before we created the Navigator
+
+	        // This was removed in beta10
+	        // navigator.navigate();
 	    }
 
+	    public String getLoggedInUser() {
+	        return loggedInUser;
+	    }
 
-	public void setLoggedInUser(String value) {
-		
+	    public void setLoggedInUser(String user) {
+	        loggedInUser = user;
+	    }
 	}
-	public String getLoggedInUser() {
-        return loggedInUser;
-    }
-}

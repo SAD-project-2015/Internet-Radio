@@ -24,6 +24,7 @@ public class PlayerView implements View {
 		Button logoutButton;
 		MediaPlayer player;
 		
+	@SuppressWarnings("restriction")
 	public	PlayerView(final Navigator navigator){
 		JFXPanel fxPanel = new JFXPanel();
 		 VerticalLayout layout = new VerticalLayout();
@@ -52,6 +53,7 @@ public class PlayerView implements View {
 		Button pauseButton = new Button("Pause");
 		Button stopButton = new Button("Stop");
 		playButton.addClickListener(new Button.ClickListener() {
+			@SuppressWarnings("restriction")
 			public void buttonClick(ClickEvent event) {
 
 				String fileName="C:/Users/Ram/Desktop/SAD/sound1.mp3";
