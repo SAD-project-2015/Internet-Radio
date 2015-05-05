@@ -10,15 +10,15 @@ import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.data.validator.AbstractValidator;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
@@ -35,6 +35,8 @@ public class IradioUI extends UI {
 	 
 
       Button loginButton;
+      Navigator navigator;
+      protected static final String MAINVIEW = "main";
 	
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = IradioUI.class)
@@ -43,13 +45,17 @@ public class IradioUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
+		
 		layout = new VerticalLayout();
 		layout.setMargin(true);
 		setContent(layout);
+		navigator = new Navigator(this,this);
+		navigator.addView("", new StartView(navigator,"hi"));
 		JFXPanel fxPanel = new JFXPanel();
 			layout.addComponent(getPlayer());	
 //			layout.addComponent(getLoginPanel());
-//		layout.setComponentAlignment(getLoginPanel(), Alignment.TOP_RIGHT);
+//		layout.setComponentAlignment(getLoginPanel(), Alignment.TOP_IGHT);
+//			navigator.navigateTo(SimpleLoginMainView.NAME);
 			}
 	
 	private Component getLoginPanel() {
@@ -103,8 +109,8 @@ public class IradioUI extends UI {
 		});
 		pauseButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-		
-				player.pause(); 		
+//				player.pause();
+				navigator.navigateTo(StartView.NAME);
 			}
 		});
 		
