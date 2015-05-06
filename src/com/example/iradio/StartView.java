@@ -23,7 +23,7 @@ public class StartView extends Panel implements View {
 
     String username;
     String password;
-IradioUI ui;
+    IradioUI ui;
 
     public StartView() {
     	
@@ -33,7 +33,6 @@ IradioUI ui;
         VerticalLayout layout = new VerticalLayout();
         FormLayout loginForm=new FormLayout();
        this.ui=getAppUI();
-//       player=new Player(navigator);
        navigator.addView(Player.NAME,new Player(navigator) );
        
         final TextField emailField = new TextField("Email");
@@ -51,8 +50,6 @@ IradioUI ui;
                 Notification.show("Welcome " + username);
 
                 ((IradioUI)UI.getCurrent()).setLoggedInUser(username);
-//navigator.addView(Player.NAME,new Player(navigator) );
-//                getAppUI().displayPlayer();
                 getUI().getNavigator().navigateTo(Player.NAME);
             	}
             }

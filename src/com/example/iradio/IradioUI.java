@@ -46,85 +46,10 @@ public class IradioUI extends UI {
 		layout.setMargin(true);
 		setContent(layout);
 		navigator = new Navigator(this,this);
-		navigator.addView("", new StartView(navigator));
-		
+		navigator.addView("", new StartView(navigator));		
 		JFXPanel fxPanel = new JFXPanel();
-//		player=new Player(this);
 			}
-	
-	private Component getLoginPanel() {
-		Panel loginPanel=new Panel();
-		loginPanel.setWidth("300px");  
-		   
-        user = new TextField("User:");
-        user.setWidth("300px");
-        user.setRequired(true);
-        user.setInputPrompt("Your username (eg. joe@email.com)");
-        user.setInvalidAllowed(false);
-
-        password = new PasswordField("Password:");
-        password.setWidth("300px");      
-        password.setRequired(true);
-        password.setValue("");
-        password.setNullRepresentation("");
-
-        // Create login button
-        loginButton = new Button("Login");
-
-        // Add both to a panel
-        VerticalLayout fields = new VerticalLayout(user, password, loginButton);
-        fields.setCaption("Please login to access the application. (test@test.com/passw0rd)");
-        fields.setSpacing(true);
-        fields.setSizeUndefined();          
-        loginPanel.setContent(fields);
-		return loginPanel;
-	}
-
-	public HorizontalLayout getPlayer() {	
-		Panel playerPanel=new Panel();		
-				HorizontalLayout playerContainer=new HorizontalLayout();
-		playerPanel.setContent(playerContainer);
-		playerPanel.setHeight("60px");
-		playerPanel.setWidth("350px");
-		playerContainer.setSpacing(true);
-		playerContainer.setMargin(true);
-		Button playButton = new Button("Play");
-		Button pauseButton = new Button("Pause");
-		Button stopButton = new Button("Stop");
-		playButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-
-//				ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-//			    String fileName =classLoader.getResource(".").getPath()+   
-//			                                       "sound1.mp3";
-				
-				String fileName="E:/sound1.mp3";
-				String uriString = new File(fileName).toURI().toString();
-				player = new MediaPlayer(new Media(uriString));
-				player.play(); 
-				
-				}
-		});
-		pauseButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-//				player.pause();
-				navigator.navigateTo(StartView.NAME);
-			}
-		});
 		
-		stopButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-				player.stop(); 			
-			}
-		});
-		
-	playerContainer.addComponent(playButton);
-	playerContainer.addComponent(pauseButton);
-	playerContainer.addComponent(stopButton);
-	playerContainer.addComponent(getLoginPanel());
-//	playerContainer.setComponentAlignment(getLoginPanel(), Alignment.TOP_RIGHT);
-	return playerContainer;
-	}
 	 public void enter(ViewChangeEvent event) {
          user.focus();
      }
@@ -132,8 +57,7 @@ public class IradioUI extends UI {
 
 	public void setLoggedInUser(String username) {
 		// TODO Auto-generated method stub
-		
-	}     
+			}     
 	
 Navigator getNavigatorManager(){
 	return navigator;
