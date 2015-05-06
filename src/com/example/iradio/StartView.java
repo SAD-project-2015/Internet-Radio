@@ -6,64 +6,94 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 public class StartView extends Panel implements View {
+	
+	private Player player;
 
     public static final String NAME = "login";
-    
-    public StartView() {
-    	HorizontalLayout hl=new HorizontalLayout();
-        hl.setSizeFull();
 
-        Button button = new Button("Go to Main View",
-                new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-//                navigator.navigateTo(MAINVIEW);
-            }
-        });
-        hl.addComponent(button);
-        hl.setComponentAlignment(button, Alignment.MIDDLE_CENTER);
+    String username;
+    String password;
+IradioUI ui;
+
+    public StartView() {
+    	
     }        
 
-    public StartView(final Navigator navigator,
-            final String fragmentAndParameters) {
-        Layout layout = new VerticalLayout();
+    public StartView(final Navigator navigator) {
+        VerticalLayout layout = new VerticalLayout();
+        FormLayout loginForm=new FormLayout();
+       this.ui=getAppUI();
+//       player=new Player(navigator);
+       navigator.addView(Player.NAME,new Player(navigator) );
+       
+        final TextField emailField = new TextField("Email");
+        loginForm.addComponent(emailField);
 
-        final TextField email = new TextField("Email");
-        layout.addComponent(email);
+        final PasswordField passwordField = new PasswordField("Password");
+        loginForm.addComponent(passwordField);
 
-        final PasswordField password = new PasswordField("Password");
-        layout.addComponent(password);
-
-        final Button login = new Button("Login", new Button.ClickListener() {
+        final Button loginButton = new Button("Login", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                Notification.show("Ok, let's pretend you're " + email);
+            	 username = emailField.getValue();
+                 password = passwordField.getValue();
+            	if(username.equals("ram@gmail.com") && password.equals("rams")){
+                Notification.show("Welcome " + username);
 
-                // indicate the user is logged in
-//                ((NavigationtestUI) UI.getCurrent()).setLoggedInUser(email
-//                        .getValue());
-
-                // navigate back to the intended place
-//                navigator.navigateTo(fragmentAndParameters);
+                ((IradioUI)UI.getCurrent()).setLoggedInUser(username);
+//navigator.addView(Player.NAME,new Player(navigator) );
+//                getAppUI().displayPlayer();
+                getUI().getNavigator().navigateTo(Player.NAME);
+            	}
             }
         });
-        layout.addComponent(login);
+        
+        final Button registerButton = new Button("Register", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+//            	 navigator.navigateTo(RegisterView.NAME);
+            	
+            }
+        });   
+        
+        final Button cancelButton = new Button("Cancel", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	
+            }
+        });    
+        
+        HorizontalLayout buttonsContainer=new HorizontalLayout();
+        buttonsContainer.addComponent(loginButton);
+        buttonsContainer.addComponent(cancelButton);
+        buttonsContainer.addComponent(registerButton);
+        buttonsContainer.setComponentAlignment(registerButton, Alignment.BOTTOM_CENTER);
+        buttonsContainer.setSpacing(true);
+        loginForm.addComponent(buttonsContainer);
+        loginForm.setSpacing(true);
+        layout.addComponent(loginForm);
+        layout.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
         setContent(layout);
 
     }
 
     @Override
     public void enter(ViewChangeEvent event) {
-        // TODO Auto-generated method stub
 
     }
+    
+   IradioUI getAppUI() {
+		return (IradioUI) UI.getCurrent();
+	}
+
 }
