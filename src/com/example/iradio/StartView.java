@@ -24,6 +24,8 @@ public class StartView extends Panel implements View {
     String username;
     String password;
 IradioUI ui;
+TextField emailField;
+PasswordField passwordField;
 
     public StartView() {
     	
@@ -33,13 +35,13 @@ IradioUI ui;
         VerticalLayout layout = new VerticalLayout();
         FormLayout loginForm=new FormLayout();
        this.ui=getAppUI();
-//       player=new Player(navigator);
        navigator.addView(Player.NAME,new Player(navigator) );
+       navigator.addView(RegisterView.NAME, new RegisterView());
        
-        final TextField emailField = new TextField("Email");
+      emailField = new TextField("Email");
         loginForm.addComponent(emailField);
 
-        final PasswordField passwordField = new PasswordField("Password");
+       passwordField = new PasswordField("Password");
         loginForm.addComponent(passwordField);
 
         final Button loginButton = new Button("Login", new Button.ClickListener() {
@@ -51,8 +53,6 @@ IradioUI ui;
                 Notification.show("Welcome " + username);
 
                 ((IradioUI)UI.getCurrent()).setLoggedInUser(username);
-//navigator.addView(Player.NAME,new Player(navigator) );
-//                getAppUI().displayPlayer();
                 getUI().getNavigator().navigateTo(Player.NAME);
             	}
             }
@@ -61,7 +61,7 @@ IradioUI ui;
         final Button registerButton = new Button("Register", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-//            	 navigator.navigateTo(RegisterView.NAME);
+            	 navigator.navigateTo(RegisterView.NAME);
             	
             }
         });   
@@ -89,7 +89,7 @@ IradioUI ui;
 
     @Override
     public void enter(ViewChangeEvent event) {
-
+    	emailField.focus();
     }
     
    IradioUI getAppUI() {

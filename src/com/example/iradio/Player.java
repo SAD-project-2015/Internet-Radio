@@ -1,7 +1,7 @@
 package com.example.iradio;
 
 import java.io.File;
-import java.io.Serializable;
+import java.net.URL;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
@@ -13,7 +13,6 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
@@ -63,13 +62,16 @@ public class Player extends Panel implements View  {
 		Button playButton = new Button("Play");
 		Button pauseButton = new Button("Pause");
 		Button stopButton = new Button("Stop");
+		
+		URL is = this.getClass().getClassLoader().getResource("resources/sound1.mp3");
+		player = new MediaPlayer(new Media(is.toString()));
+		
 		playButton.addClickListener(new Button.ClickListener() {
 			@SuppressWarnings("restriction")
 			public void buttonClick(ClickEvent event) {
 
-				String fileName="C:/Users/Ram/Desktop/SAD/sound1.mp3";
-				String uriString = new File(fileName).toURI().toString();
-				player = new MediaPlayer(new Media(uriString));
+//				String fileName="C:/Users/Ram/Desktop/SAD/sound1.mp3";
+//				String uriString = new File(fileName).toURI().toString();			
 				player.play(); 
 				
 				}
@@ -100,8 +102,6 @@ public class Player extends Panel implements View  {
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	
+	}	
 
 }
