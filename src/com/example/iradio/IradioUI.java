@@ -23,8 +23,7 @@ public class IradioUI extends UI {
 	private Player player;
 	
 	VerticalLayout layout;
-   TextField user;
-    PasswordField    password ;
+    String user; 
 	 
 
       Button loginButton;
@@ -49,14 +48,8 @@ public class IradioUI extends UI {
 //		player=new Player(this);
 			}
 	
-	 public void enter(ViewChangeEvent event) {
-         user.focus();
-     }
-
-
 	public void setLoggedInUser(String username) {
-		// TODO Auto-generated method stub
-		
+this.user=username;		
 	}     
 	
 Navigator getNavigatorManager(){
@@ -68,7 +61,6 @@ player.showPlayer();
 }
 
 public Object getLoggedInUser() {
-	// TODO Auto-generated method stub
-	return null;
+	return user;
 }
     }
