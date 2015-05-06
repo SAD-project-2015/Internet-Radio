@@ -1,6 +1,7 @@
 package com.example.iradio;
 
 
+import com.example.services.ServiceProvider;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -20,6 +21,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.UI;
 
 /**
  *
@@ -30,8 +32,8 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 	 public static final String NAME = "register";
 
 
-    private TextField email = new TextField("Email address");
-	private PasswordField password = new PasswordField("Password");
+    private TextField emailField = new TextField("Email address");
+	private PasswordField passwordField = new PasswordField("Password");
 	private PasswordField retyped = new PasswordField("Retype");
 	private CheckBox acceptTerms = new CheckBox("I accept terms and conditions.");
 	
@@ -43,21 +45,24 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 	
 	public RegisterView() {
 		super();
-		this.addComponent(this.email);
-		this.addComponent(this.password);
+		this.addComponent(this.emailField);
+		this.addComponent(this.passwordField);
 		this.addComponent(this.retyped);
 		this.addComponent(this.acceptTerms);
 		
 		this.addComponent(this.register);
-		this.register.setVisible(false);
+		this.register.setEnabled(false);
 		
-		for(Field<?> f: new Field<?>[]{this.email, this.password, this.retyped, this.acceptTerms}) {
+		getAppUI().getNavigator().addView(StartView.NAME,new StartView() );
+		
+		
+		for(Field<?> f: new Field<?>[]{this.emailField, this.passwordField, this.retyped, this.acceptTerms}) {
 			f.setRequired(true);
 			f.setRequiredError("This field is required.");
 		}
 		
-		this.email.addValidator(new EmailValidator("Unrecognised format of email address."));
-		this.password.addValidator(new Validator() {
+		this.emailField.addValidator(new EmailValidator("Unrecognised format of email address."));
+		this.passwordField.addValidator(new Validator() {
 			
 			@Override
 			public void validate(Object value) throws InvalidValueException {
@@ -73,7 +78,7 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 			@Override
 			public void validate(Object value) throws InvalidValueException {
 				String retyped = value == null ? "" : value.toString();
-				if(!retyped.equals(password.getValue())) throw new InvalidValueException("Retyped password does not match.");
+				if(!retyped.equals(passwordField.getValue())) throw new InvalidValueException("Retyped password does not match.");
 			}
 			
 		});
@@ -82,18 +87,18 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 			
 			@Override
 			public void valueChange(Property.ValueChangeEvent event) {
-				register.setVisible(acceptTerms.getValue());
+				register.setEnabled(acceptTerms.getValue());
 			}
 		});
 		
-		this.fieldGroup.bind(this.email, "email");
-		this.fieldGroup.bind(this.password, "password");
+		this.fieldGroup.bind(this.emailField, "email");
+		this.fieldGroup.bind(this.passwordField, "password");
 		
 	}
 	
 	@Override
 	public void enter(ViewChangeEvent event) {
-//		this.container = ServiceProvider.getInstance().getContainerService().getUsersContainer();
+		this.container = ServiceProvider.getInstance().getContainerService().getUsersContainer();
 		Object newUserId = this.container.addItem();
 		if(newUserId == null)
 			Notification.show("Could not add user to the database.", Notification.Type.ERROR_MESSAGE);
@@ -110,12 +115,17 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 				this.fieldGroup.commit();
 				this.register.setEnabled(false);
 				Notification.show("Your account has been created.");
+				getUI().getNavigator().navigateTo(StartView.NAME);
 			} catch (CommitException e) {
 				e.printStackTrace();
 				Notification.show("The data could not be saved.", "Error message: "+e.getMessage(), Notification.Type.ERROR_MESSAGE);
 			}			
 		}
 		else Notification.show("One or more fields contain invalid values.");
+	}
+	
+	IradioUI getAppUI() {
+		return (IradioUI) UI.getCurrent();
 	}
     
 }
