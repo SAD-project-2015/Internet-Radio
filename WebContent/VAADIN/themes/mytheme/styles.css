@@ -1,0 +1,9 @@
+@CHARSET "ISO-8859-1";
+@import "mytheme.css";
+
+.backColor{background: black;}
+
+.backgroundimage {
+       background: url("/IRadio/src/resources/srh.jpg");
+    } 
+

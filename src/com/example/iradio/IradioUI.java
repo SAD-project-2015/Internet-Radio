@@ -13,7 +13,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
-@Theme("iradio")
+@Theme("mytheme")
 public class IradioUI extends UI {
 
 	private Player player;
@@ -36,8 +36,9 @@ public class IradioUI extends UI {
 		
 		layout = new VerticalLayout();
 		layout.setMargin(true);
+//		layout.setStyleName("backgroundimage");
 		setContent(layout);
-		navigator = new Navigator(this,this);
+				navigator = new Navigator(this,this);
 		navigator.addView("", new StartView(navigator));		
 		JFXPanel fxPanel = new JFXPanel();
 			}

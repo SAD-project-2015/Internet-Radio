@@ -33,6 +33,9 @@ PasswordField passwordField;
 
     public StartView(final Navigator navigator) {
         VerticalLayout layout = new VerticalLayout();
+        layout.setHeight("150px");
+        layout.setWidth("100%");
+        layout.setStyleName("backColor");
         FormLayout loginForm=new FormLayout();
        this.ui=getAppUI();
        navigator.addView(Player.NAME,new Player(navigator) );
