@@ -43,8 +43,11 @@ PasswordField passwordField;
        
       emailField = new TextField("Email");
         loginForm.addComponent(emailField);
+        emailField.setStyleName("labelblue");
+        
 
        passwordField = new PasswordField("Password");
+       passwordField.setStyleName("labelblue");
         loginForm.addComponent(passwordField);
 
         final Button loginButton = new Button("Login", new Button.ClickListener() {

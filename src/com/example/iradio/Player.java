@@ -23,10 +23,14 @@ public class Player extends Panel implements View  {
 	 public static final String NAME = "player";
 	private static final long serialVersionUID = 6714096000861957459L;
 		Button logoutButton;
-		MediaPlayer player;
+	 MediaPlayer player;
+	 boolean currentlyPlaying=false;
+	 
 		 VerticalLayout layout;
 		 IradioUI ui;
-		
+		 String fileList[] = null;
+//		 URL path = this.getClass().getClassLoader().getResource("resources/");
+		 final File folder = new File("resources/");
 	@SuppressWarnings({ "restriction", "unused" })
 	public	Player(Navigator navigator){
 		this.ui=ui;
@@ -49,6 +53,7 @@ public class Player extends Panel implements View  {
      layout.addComponent(logoutButton);
      layout.setComponentAlignment(logoutButton, Alignment.TOP_RIGHT);
      layout.addComponent(getPlayer());
+     layout.setStyleName("backgroundblack");
      setContent(layout);
 }
 	public HorizontalLayout getPlayer() {	
@@ -61,31 +66,39 @@ public class Player extends Panel implements View  {
 		playerContainer.setMargin(true);
 		Button playButton = new Button("Play");
 		Button pauseButton = new Button("Pause");
-		Button stopButton = new Button("Stop");
+		Button stopButton = new Button("Stop");		
 		
-		URL is = this.getClass().getClassLoader().getResource("resources/sound1.mp3");
-		player = new MediaPlayer(new Media(is.toString()));
+		getFileListFromFolder();		
 		
 		playButton.addClickListener(new Button.ClickListener() {
 			@SuppressWarnings("restriction")
 			public void buttonClick(ClickEvent event) {
-
-//				String fileName="C:/Users/Ram/Desktop/SAD/sound1.mp3";
-//				String uriString = new File(fileName).toURI().toString();			
-				player.play(); 
+				
+//				URL is = this.getClass().getClassLoader().getResource(folder+"/"+fileList[1]);
+				player = new MediaPlayer(new Media(fileList[0]));
+				
+				if(!currentlyPlaying){					
+				player.play();	
+				currentlyPlaying=true;
+				}
 				
 				}
 		});
 		pauseButton.addClickListener(new Button.ClickListener() {
-			public void buttonClick(ClickEvent event) {
-		
-				player.pause(); 		
+			public void buttonClick(ClickEvent event) {		
+				if(currentlyPlaying){
+				player.pause(); 
+				currentlyPlaying=false;
+				}
 			}
 		});
 		
 		stopButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
-				player.stop(); 			
+				if(currentlyPlaying){
+				player.stop(); 		
+				currentlyPlaying=false;
+				}
 			}
 		});
 		
@@ -95,12 +108,28 @@ public class Player extends Panel implements View  {
 	return playerContainer;
 	}
 	
+	public void getFileListFromFolder() {		
+		int i=0;
+		File folder=new File(this.getClass().getResource("/resources").getFile());
+		System.out.println(folder.toString());
+//		File[] fileList=file.listFiles();
+		
+	if(folder!=null && folder.isDirectory()){
+	    for (final String fileName : folder.list()) {
+//	        if (file.isFile()) {
+	          	i++;
+//	           fileList[i]= file.getName();
+	           System.out.println(fileName);
+	        }
+	    }
+	}
+	
+	
 	public VerticalLayout showPlayer() {
 		return layout;
 	}
 	@Override
 	public void enter(ViewChangeEvent event) {
-		// TODO Auto-generated method stub
 		
 	}	
 

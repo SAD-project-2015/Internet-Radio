@@ -4,6 +4,15 @@
 .backColor{background: black;}
 
 .backgroundimage {
-       background: url("/IRadio/src/resources/srh.jpg");
+       background: url("resources/srh.jpg") no-repeat;
     } 
+    
+ .v-caption-labelblue {
+    font-size: 12px;
+  color: red;
+    }
+    
+    .backgroundblack{
+    background: black;
+    }
 

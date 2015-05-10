@@ -36,7 +36,7 @@ public class IradioUI extends UI {
 		
 		layout = new VerticalLayout();
 		layout.setMargin(true);
-//		layout.setStyleName("backgroundimage");
+		layout.setStyleName("backgroundimage");
 		setContent(layout);
 				navigator = new Navigator(this,this);
 		navigator.addView("", new StartView(navigator));		
