@@ -1,20 +1,22 @@
 package com.example.iradio;
 
 import java.io.File;
-import java.net.URL;
 
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import com.vaadin.data.Item;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -25,16 +27,18 @@ public class Player extends Panel implements View  {
 		Button logoutButton;
 	 MediaPlayer player;
 	 boolean currentlyPlaying=false;
+	 int k=0;
 	 
 		 VerticalLayout layout;
 		 IradioUI ui;
-		 String fileList[] = null;
-//		 URL path = this.getClass().getClassLoader().getResource("resources/");
-		 final File folder = new File("resources/");
+		 String fileList[];
+		 Table playList;
+		 final String path = "/resources";
 	@SuppressWarnings({ "restriction", "unused" })
 	public	Player(Navigator navigator){
 		this.ui=ui;
 		JFXPanel fxPanel = new JFXPanel();
+		fileList=new String[100];
 		layout = new VerticalLayout();
 		
 	 logoutButton = new Button("Logout", new Button.ClickListener() {
@@ -53,9 +57,22 @@ public class Player extends Panel implements View  {
      layout.addComponent(logoutButton);
      layout.setComponentAlignment(logoutButton, Alignment.TOP_RIGHT);
      layout.addComponent(getPlayer());
+     getFileListFromFolder();
+     layout.addComponent(getPlayList());
      layout.setStyleName("backgroundblack");
      setContent(layout);
 }
+	private Component getPlayList() {
+		playList=new Table("PlayList");
+		playList.setPageLength(playList.size());
+		playList.addContainerProperty("Song", String.class, null);
+		int m=0;
+		for(String song:fileList){
+			playList.addItem(new Object[]{song},m);
+			m++;
+		}
+		return playList;
+	}
 	public HorizontalLayout getPlayer() {	
 		Panel playerPanel=new Panel();		
 				HorizontalLayout playerContainer=new HorizontalLayout();
@@ -68,21 +85,21 @@ public class Player extends Panel implements View  {
 		Button pauseButton = new Button("Pause");
 		Button stopButton = new Button("Stop");		
 		
-		getFileListFromFolder();		
-		
 		playButton.addClickListener(new Button.ClickListener() {
 			@SuppressWarnings("restriction")
 			public void buttonClick(ClickEvent event) {
 				
-//				URL is = this.getClass().getClassLoader().getResource(folder+"/"+fileList[1]);
-				player = new MediaPlayer(new Media(fileList[0]));
-				
-				if(!currentlyPlaying){					
+				if(!currentlyPlaying){
+					setCurrentTrack(fileList[k]);
 				player.play();	
 				currentlyPlaying=true;
 				}
 				
 				}
+
+			private void playNext() {
+            setCurrentTrack(fileList[k+1]);				
+			}
 		});
 		pauseButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {		
@@ -108,20 +125,25 @@ public class Player extends Panel implements View  {
 	return playerContainer;
 	}
 	
-	public void getFileListFromFolder() {		
+	public void getCurrentlyPlayingTrack(){
+		
+	}
+	
+	public void setCurrentTrack(String st){
+		player = new MediaPlayer(new Media(this.getClass().getClassLoader().getResource(path +"/"+st).toString()));
+	}
+	
+	public String[] getFileListFromFolder() {		
 		int i=0;
-		File folder=new File(this.getClass().getResource("/resources").getFile());
-		System.out.println(folder.toString());
-//		File[] fileList=file.listFiles();
+		File folder=new File(this.getClass().getResource(path).getFile());
 		
 	if(folder!=null && folder.isDirectory()){
-	    for (final String fileName : folder.list()) {
-//	        if (file.isFile()) {
-	          	i++;
-//	           fileList[i]= file.getName();
-	           System.out.println(fileName);
+	    for (String fileName : folder.list()) {
+	          	  fileList[i]= fileName;
+	          	  i++;
 	        }
 	    }
+	return fileList;
 	}
 	
 	
