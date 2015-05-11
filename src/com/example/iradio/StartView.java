@@ -17,7 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 
 public class StartView extends Panel implements View {
 	
-	private Player player;
+	private PlayerView player;
 
     public static final String NAME = "login";
 
@@ -38,7 +38,7 @@ PasswordField passwordField;
         layout.setStyleName("backColor");
         FormLayout loginForm=new FormLayout();
        this.ui=getAppUI();
-       navigator.addView(Player.NAME,new Player(navigator) );
+       navigator.addView(PlayerView.NAME,new PlayerView(navigator) );
        navigator.addView(RegisterView.NAME, new RegisterView());
        
       emailField = new TextField("Email");
@@ -59,7 +59,7 @@ PasswordField passwordField;
                 Notification.show("Welcome " + username);
 
                 ((IradioUI)UI.getCurrent()).setLoggedInUser(username);
-                getUI().getNavigator().navigateTo(Player.NAME);
+                getUI().getNavigator().navigateTo(PlayerView.NAME);
             	}
             }
         });

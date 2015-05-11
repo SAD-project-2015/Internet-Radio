@@ -6,10 +6,10 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import com.vaadin.data.Item;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.shared.ui.MediaControl;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -20,12 +20,26 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("restriction")
-public class Player extends Panel implements View  {
+public class PlayerView extends Panel implements View  {
 	 public static final String NAME = "player";
 	private static final long serialVersionUID = 6714096000861957459L;
 		Button logoutButton;
 	 MediaPlayer player;
+	 Media media;
+MediaControl mc=new MediaControl() {
+	
+	@Override
+	public void play() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+};
 	 boolean currentlyPlaying=false;
 	 int k=0;
 	 
@@ -34,9 +48,8 @@ public class Player extends Panel implements View  {
 		 String fileList[];
 		 Table playList;
 		 final String path = "/resources";
-	@SuppressWarnings({ "restriction", "unused" })
-	public	Player(Navigator navigator){
-		this.ui=ui;
+	@SuppressWarnings({ "unused" })
+	public	PlayerView(Navigator navigator){
 		JFXPanel fxPanel = new JFXPanel();
 		fileList=new String[100];
 		layout = new VerticalLayout();
@@ -50,7 +63,6 @@ public class Player extends Panel implements View  {
 
              ((IradioUI) UI.getCurrent()).setLoggedInUser(null);
              logoutButton.setCaption("Logout");
-//             navigator.navigateTo(LoginView.NAME);
 
          }
      });
@@ -64,6 +76,8 @@ public class Player extends Panel implements View  {
 }
 	private Component getPlayList() {
 		playList=new Table("PlayList");
+		playList.setWidth("300px");
+		playList.setHeight("600px");
 		playList.setPageLength(playList.size());
 		playList.addContainerProperty("Song", String.class, null);
 		int m=0;
@@ -86,20 +100,30 @@ public class Player extends Panel implements View  {
 		Button stopButton = new Button("Stop");		
 		
 		playButton.addClickListener(new Button.ClickListener() {
-			@SuppressWarnings("restriction")
+			private static final long serialVersionUID = -1422054963939732398L;
+
 			public void buttonClick(ClickEvent event) {
 				
 				if(!currentlyPlaying){
-					setCurrentTrack(fileList[k]);
-				player.play();	
-				currentlyPlaying=true;
+					currentlyPlaying=true;
+					
+					for(String songName: fileList){
+					setCurrentTrack(fileList[k+2]);
+				    player.play();
+				   
+				    	player.setOnEndOfMedia(new Runnable() {
+				            @Override public void run() {
+				               playNext();
+				              }
+				            });
+//					playNext();
+					
+					
+				}
+				}
 				}
 				
-				}
-
-			private void playNext() {
-            setCurrentTrack(fileList[k+1]);				
-			}
+				
 		});
 		pauseButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {		
@@ -125,12 +149,18 @@ public class Player extends Panel implements View  {
 	return playerContainer;
 	}
 	
+	private void playNext() {
+        setCurrentTrack(fileList[k+1]);	
+        player.play();
+		}
+	
 	public void getCurrentlyPlayingTrack(){
 		
 	}
 	
 	public void setCurrentTrack(String st){
-		player = new MediaPlayer(new Media(this.getClass().getClassLoader().getResource(path +"/"+st).toString()));
+		media=new Media(this.getClass().getClassLoader().getResource(path +"/"+st).toString());
+				player = new MediaPlayer(media);
 	}
 	
 	public String[] getFileListFromFolder() {		

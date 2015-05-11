@@ -16,7 +16,7 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("mytheme")
 public class IradioUI extends UI {
 
-	private Player player;
+	private PlayerView player;
 	
 	VerticalLayout layout;
     String user; 
