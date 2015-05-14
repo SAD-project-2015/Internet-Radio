@@ -1,7 +1,5 @@
 package com.example.iradio;
 
-import javafx.embed.swing.JFXPanel;
-
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
@@ -10,6 +8,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
@@ -18,12 +18,9 @@ public class IradioUI extends UI {
 
 	private PlayerView player;
 	
-	VerticalLayout layout;
     String user; 
-	 
-
-      Button loginButton;
-      Navigator navigator;
+    Navigator navigator;
+    
       protected static final String MAINVIEW = "main";
 	
 	@WebServlet(value = "/*", asyncSupported = true)
@@ -33,14 +30,8 @@ public class IradioUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		
-		layout = new VerticalLayout();
-		layout.setMargin(true);
-		layout.setStyleName("backgroundimage");
-		setContent(layout);
 				navigator = new Navigator(this,this);
-		navigator.addView("", new StartView(navigator));		
-		JFXPanel fxPanel = new JFXPanel();
+		navigator.addView("", new StartView(navigator));
 			}
 		
 	public void setLoggedInUser(String username) {

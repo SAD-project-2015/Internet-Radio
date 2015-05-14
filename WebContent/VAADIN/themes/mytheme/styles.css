@@ -1,18 +1,35 @@
 @CHARSET "ISO-8859-1";
 @import "mytheme.css";
 
-.backColor{background: black;}
+.backColor{background: url("images/srh.jpg") no-repeat;}
 
-.backgroundimage {
-       background: url("resources/srh.jpg") no-repeat;
-    } 
+.backgroundimage{
+	background: url("images/srh.jpg");
+ background-size: 200px 300px;
+} 
     
  .v-caption-labelblue {
     font-size: 12px;
   color: red;
     }
     
+    .playerbackground{
+    background: url("images/music.jpg") no-repeat;
+         
+    }
+    
     .backgroundblack{
     background: black;
+     
+    }
+    
+    .playercontainer{
+      background: url("images/player1.jpg") no-repeat;
+    }
+    
+    .topBar{
+    background: black;
+        height:50px;
+    width:100%;
     }
 

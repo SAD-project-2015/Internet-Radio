@@ -26,20 +26,6 @@ public class PlayerView extends Panel implements View  {
 		Button logoutButton;
 	 MediaPlayer player;
 	 Media media;
-MediaControl mc=new MediaControl() {
-	
-	@Override
-	public void play() {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-};
 	 boolean currentlyPlaying=false;
 	 int k=0;
 	 
@@ -53,6 +39,8 @@ MediaControl mc=new MediaControl() {
 		JFXPanel fxPanel = new JFXPanel();
 		fileList=new String[100];
 		layout = new VerticalLayout();
+		layout.setSizeFull();
+		 layout.setStyleName("playerbackground");
 		
 	 logoutButton = new Button("Logout", new Button.ClickListener() {
         
@@ -71,7 +59,7 @@ MediaControl mc=new MediaControl() {
      layout.addComponent(getPlayer());
      getFileListFromFolder();
      layout.addComponent(getPlayList());
-     layout.setStyleName("backgroundblack");
+    
      setContent(layout);
 }
 	private Component getPlayList() {
@@ -88,11 +76,8 @@ MediaControl mc=new MediaControl() {
 		return playList;
 	}
 	public HorizontalLayout getPlayer() {	
-		Panel playerPanel=new Panel();		
 				HorizontalLayout playerContainer=new HorizontalLayout();
-		playerPanel.setContent(playerContainer);
-		playerPanel.setHeight("60px");
-		playerPanel.setWidth("350px");
+				playerContainer.setStyleName("playercontainer");
 		playerContainer.setSpacing(true);
 		playerContainer.setMargin(true);
 		Button playButton = new Button("Play");
@@ -142,10 +127,10 @@ MediaControl mc=new MediaControl() {
 				}
 			}
 		});
-		
 	playerContainer.addComponent(playButton);
 	playerContainer.addComponent(pauseButton);
 	playerContainer.addComponent(stopButton);
+	playerContainer.setStyleName("");
 	return playerContainer;
 	}
 	
