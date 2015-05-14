@@ -102,7 +102,7 @@ final String path = "/resources";
         loginForm.setSpacing(true);
         mainLayout.addComponent(loginForm);
         mainLayout.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
-        mainLayout.addComponent(getImageComponent());
+//        mainLayout.addComponent(getImageComponent());
               setCompositionRoot(mainLayout);
 
     }

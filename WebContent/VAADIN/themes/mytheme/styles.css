@@ -27,18 +27,26 @@
      
          }
     
-    .v-verticallayout.contentbar{
+   .contentbar{
     background: url("images/music.jpg") no-repeat;     
-     background-size: 13200px 600px; 
+     background-size: 1400px 700px; 
     }
     
-   .v-tabsheet .menusheet{
+    .menusheet{
     background:black;
-   color :red;
+    color:red;
     }
+    
+    .title{
+    font-weight: 800;
+    display:center
+    color:red;
+    
+    }
+    
     
     .topBar{
-    background:#8000ff;
+    background:#887F7C;
         height:90px;
     width:100%;
     }

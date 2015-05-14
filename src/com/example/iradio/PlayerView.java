@@ -38,7 +38,7 @@ public class PlayerView extends Panel implements View  {
 		 IradioUI ui;
 		 String fileList[];
 		 Table playList;
-		 final String path = "/resources";
+		 final String path = "/audio";
 	@SuppressWarnings({ "unused" })
 	public	PlayerView(Navigator navigator){
 		JFXPanel fxPanel = new JFXPanel();
@@ -59,7 +59,9 @@ public class PlayerView extends Panel implements View  {
 }
 	private Component getTopBar(){
 		 topBar.setStyleName("topBar");
-		 topBar.addComponent(new Label("Internet-Radio"));
+		 Label title=new Label("Internet-Radio");
+		 title.setStyleName("title");
+		 topBar.addComponent(title);
 		 logoutButton = new Button("Logout", new Button.ClickListener() {
 		        
 				private static final long serialVersionUID = 2718672708618255597L;
@@ -79,20 +81,20 @@ public class PlayerView extends Panel implements View  {
 	private Component getMenuBar(){
 		menuSheet=new TabSheet();
 		menuSheet.setSizeFull();
-		menuSheet.setStyleName("menusheet");
+//		menuSheet.setStyleName("menusheet");
 		
-		menuSheet.addTab(getContentBar(),"Player");
+		menuSheet.addTab(getContentBar(),"Radio");
 		
 		menuSheet.addTab(new Label("Contents of the first tab"),
-		          "First Tab");
+		          "Profile");
 		menuSheet.addTab(new Label("Contents of the first tab"),
-		          "Second Tab");		
+		          "Recordings");		
 		menuSheet.addTab(new Label("Contents of the first tab"),
-		          "third Tab");
+		          "Downloads");
 		menuSheet.addTab(new Label("Contents of the first tab"),
-		          "Fourth Tab");
+		          "Contact");
 		menuSheet.addTab(new Label("Contents of the first tab"),
-		          "Fifth Tab");
+		          "Events");
 		return menuSheet;
 	}
 	
