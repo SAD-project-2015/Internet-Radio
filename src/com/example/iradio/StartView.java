@@ -41,8 +41,6 @@ final String path = "/resources";
 
     public StartView(final Navigator navigator) {
         mainLayout = new VerticalLayout();
-//        layout.setHeight("600px");
-//        layout.setWidth("800px");
         mainLayout.setSizeFull();
         mainLayout.setStyleName("backgroundimage");
         

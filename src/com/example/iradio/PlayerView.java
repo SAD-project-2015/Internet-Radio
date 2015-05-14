@@ -44,16 +44,12 @@ public class PlayerView extends Panel implements View  {
 		fileList=new String[100];
 		layout = new VerticalLayout();
 		layout.setSizeFull();
-//		 layout.setStyleName("playerbackground");
 		 
 		  topBar=new HorizontalLayout();
 		  menuBar=new HorizontalLayout();	
-		  contentBar=new VerticalLayout();	
-		  
+		  contentBar=new VerticalLayout();		  
 			 layout.addComponent(getTopBar());			       
-			 layout.addComponent(getMenuBar());				       
-//		     layout.addComponent(getContentBar()); 
-    
+			 layout.addComponent(getMenuBar());	    
      setContent(layout);
 }
 	private Component getTopBar(){
@@ -61,7 +57,6 @@ public class PlayerView extends Panel implements View  {
 		 Label title=new Label("Internet-Radio");
 		 title.setStyleName("title");
 		 topBar.addComponent(title);
-//		 topBar.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
 		 topBar.addStyleName("topBar");
 		 logoutButton = new Button("Logout", new Button.ClickListener() {
 		        
@@ -139,24 +134,20 @@ public class PlayerView extends Panel implements View  {
 				if(!currentlyPlaying){
 					currentlyPlaying=true;
 					
-					for(String songName: fileList){
-					setCurrentTrack(fileList[k+2]);
+					setCurrentTrack(fileList[k]);
 				    player.play();
+					for(String songName: fileList){			
 				   
 				    	player.setOnEndOfMedia(new Runnable() {
 				            @Override public void run() {
 				               playNext();
 				              }
 				            });
-//					playNext();
-					
-					
 				}
 				}
 				}
-				
-				
 		});
+		
 		pauseButton.addClickListener(new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {		
 				if(currentlyPlaying){
@@ -177,7 +168,6 @@ public class PlayerView extends Panel implements View  {
 	playerContainer.addComponent(playButton);
 	playerContainer.addComponent(pauseButton);
 	playerContainer.addComponent(stopButton);
-	playerContainer.setStyleName("");
 	return playerContainer;
 	}
 	
