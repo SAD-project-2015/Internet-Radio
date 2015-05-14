@@ -31,7 +31,6 @@ public class StartView extends CustomComponent implements View {
     String password;
     IradioUI ui;
     VerticalLayout mainLayout;
-    HorizontalLayout topBar;
 TextField emailField;
 PasswordField passwordField;
 final String path = "/resources";
@@ -47,11 +46,6 @@ final String path = "/resources";
         mainLayout.setSizeFull();
         mainLayout.setStyleName("backgroundimage");
         
-        topBar=new HorizontalLayout();
-        topBar.setStyleName("topBar");
-		 topBar.addComponent(new Label("This is Top Bar"));
-		 mainLayout.addComponent(topBar);
-		 
         FormLayout loginForm=new FormLayout();
        this.ui=getAppUI();
        navigator.addView(PlayerView.NAME,new PlayerView(navigator) );
@@ -77,6 +71,7 @@ final String path = "/resources";
 
                 ((IradioUI)UI.getCurrent()).setLoggedInUser(username);
                 getUI().getNavigator().navigateTo(PlayerView.NAME);
+                
             	}
             }
         });

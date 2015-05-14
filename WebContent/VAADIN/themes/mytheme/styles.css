@@ -4,7 +4,7 @@
 .backColor{background: url("images/srh.jpg") no-repeat;}
 
 .backgroundimage{
-	background: url("images/srh.jpg");
+	background: url("images/srh.jpg") no-repeat;
  background-size: 200px 300px;
 } 
     
@@ -14,8 +14,8 @@
     }
     
     .playerbackground{
-    background: url("images/music.jpg") no-repeat;
-         
+     background: url("images/music.jpg") no-repeat;     
+     background-size: 1400px 650px;      
     }
     
     .backgroundblack{
@@ -24,12 +24,22 @@
     }
     
     .playercontainer{
-      background: url("images/player1.jpg") no-repeat;
+     
+         }
+    
+    .v-verticallayout.contentbar{
+    background: url("images/music.jpg") no-repeat;     
+     background-size: 13200px 600px; 
+    }
+    
+   .v-tabsheet .menusheet{
+    background:black;
+   color :red;
     }
     
     .topBar{
-    background: black;
-        height:50px;
+    background:#8000ff;
+        height:90px;
     width:100%;
     }
 

@@ -9,13 +9,15 @@ import javafx.scene.media.MediaPlayer;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.shared.ui.MediaControl;
+import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -26,6 +28,9 @@ public class PlayerView extends Panel implements View  {
 		Button logoutButton;
 	 MediaPlayer player;
 	 Media media;
+	 HorizontalLayout topBar,menuBar;
+	 VerticalLayout contentBar;
+	 TabSheet menuSheet;
 	 boolean currentlyPlaying=false;
 	 int k=0;
 	 
@@ -40,29 +45,68 @@ public class PlayerView extends Panel implements View  {
 		fileList=new String[100];
 		layout = new VerticalLayout();
 		layout.setSizeFull();
-		 layout.setStyleName("playerbackground");
-		
-	 logoutButton = new Button("Logout", new Button.ClickListener() {
-        
-		private static final long serialVersionUID = 2718672708618255597L;
-
-		@Override
-         public void buttonClick(ClickEvent event) {
-
-             ((IradioUI) UI.getCurrent()).setLoggedInUser(null);
-             logoutButton.setCaption("Logout");
-
-         }
-     });
-     layout.addComponent(logoutButton);
-     layout.setComponentAlignment(logoutButton, Alignment.TOP_RIGHT);
-     layout.addComponent(getPlayer());
-     getFileListFromFolder();
-     layout.addComponent(getPlayList());
+//		 layout.setStyleName("playerbackground");
+		 
+		  topBar=new HorizontalLayout();
+		  menuBar=new HorizontalLayout();	
+		  contentBar=new VerticalLayout();	
+		  
+			 layout.addComponent(getTopBar());			       
+			 layout.addComponent(getMenuBar());				       
+//		     layout.addComponent(getContentBar()); 
     
      setContent(layout);
 }
+	private Component getTopBar(){
+		 topBar.setStyleName("topBar");
+		 topBar.addComponent(new Label("Internet-Radio"));
+		 logoutButton = new Button("Logout", new Button.ClickListener() {
+		        
+				private static final long serialVersionUID = 2718672708618255597L;
+
+				@Override
+		         public void buttonClick(ClickEvent event) {
+
+		             ((IradioUI) UI.getCurrent()).setLoggedInUser(null);
+		             logoutButton.setCaption("Logout");
+		         }
+		     });
+		     topBar.addComponent(logoutButton);
+		    topBar.setComponentAlignment(logoutButton, Alignment.TOP_RIGHT);		    
+		    return topBar;
+	}
+	
+	private Component getMenuBar(){
+		menuSheet=new TabSheet();
+		menuSheet.setSizeFull();
+		menuSheet.setStyleName("menusheet");
+		
+		menuSheet.addTab(getContentBar(),"Player");
+		
+		menuSheet.addTab(new Label("Contents of the first tab"),
+		          "First Tab");
+		menuSheet.addTab(new Label("Contents of the first tab"),
+		          "Second Tab");		
+		menuSheet.addTab(new Label("Contents of the first tab"),
+		          "third Tab");
+		menuSheet.addTab(new Label("Contents of the first tab"),
+		          "Fourth Tab");
+		menuSheet.addTab(new Label("Contents of the first tab"),
+		          "Fifth Tab");
+		return menuSheet;
+	}
+	
+	private Component getContentBar(){
+		 contentBar.setStyleName("contentbar");
+		 contentBar.addComponent(new Label("This is Content Bar"));
+		 contentBar.setSizeFull();
+		contentBar.addComponent(getPlayer());
+	     contentBar.addComponent(getPlayList());
+		return contentBar;
+		
+	}
 	private Component getPlayList() {
+		  getFileListFromFolder();
 		playList=new Table("PlayList");
 		playList.setWidth("300px");
 		playList.setHeight("600px");
