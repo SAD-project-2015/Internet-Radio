@@ -9,7 +9,6 @@ import javafx.scene.media.MediaPlayer;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
-import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -58,10 +57,12 @@ public class PlayerView extends Panel implements View  {
      setContent(layout);
 }
 	private Component getTopBar(){
-		 topBar.setStyleName("topBar");
+		
 		 Label title=new Label("Internet-Radio");
 		 title.setStyleName("title");
 		 topBar.addComponent(title);
+//		 topBar.setComponentAlignment(title, Alignment.MIDDLE_CENTER);
+		 topBar.addStyleName("topBar");
 		 logoutButton = new Button("Logout", new Button.ClickListener() {
 		        
 				private static final long serialVersionUID = 2718672708618255597L;
@@ -81,7 +82,7 @@ public class PlayerView extends Panel implements View  {
 	private Component getMenuBar(){
 		menuSheet=new TabSheet();
 		menuSheet.setSizeFull();
-//		menuSheet.setStyleName("menusheet");
+		menuSheet.addStyleName("menusheet");
 		
 		menuSheet.addTab(getContentBar(),"Radio");
 		

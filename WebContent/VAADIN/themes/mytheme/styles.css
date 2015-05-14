@@ -29,24 +29,29 @@
     
    .contentbar{
     background: url("images/music.jpg") no-repeat;     
-     background-size: 1400px 700px; 
+     background-size: 1400px 600px; 
     }
     
     .menusheet{
-    background:black;
-    color:red;
+    background: black;
+    color: red;
+    font-weight:bold;
+    font-size:10px;
     }
     
     .title{
-    font-weight: 800;
-    display:center
-    color:red;
+  font-size: 90px;
+  color: red;
+  display: inline-table;
+  font-weight: 900;
+  padding-top: 30px;
+  padding-left: 400px;
     
     }
     
     
     .topBar{
-    background:#887F7C;
+    background:#000000;
         height:90px;
     width:100%;
     }
