@@ -69,6 +69,7 @@ public class PlayerView extends Panel implements View  {
 		             logoutButton.setCaption("Logout");
 		         }
 		     });
+		 logoutButton.setStyleName("logout");
 		     topBar.addComponent(logoutButton);
 		    topBar.setComponentAlignment(logoutButton, Alignment.BOTTOM_RIGHT);		    
 		    return topBar;
@@ -83,35 +84,23 @@ public class PlayerView extends Panel implements View  {
 		
 		menuSheet.addTab(getUserProfile(),
 		          "Profile");
-		menuSheet.addTab(getPlayList(),
+		menuSheet.addTab(getRecordingsPage(),
 		          "Recordings");		
-		menuSheet.addTab(getPlayList(),
+		menuSheet.addTab(getDownloadsPage(),
 		          "Downloads");
 		menuSheet.addTab(getContactPage(),
 		          "Contact");
 		menuSheet.addTab(getEventsPage(),
 		          "Events");
-		menuSheet.addTab(getEventsPage(),
+		menuSheet.addTab(getPhotosPage(),
 		          "Photos");
-		menuSheet.addTab(getEventsPage(),
+		menuSheet.addTab(getVideosPage(),
 		          "Video-Seminars");
 		menuSheet.addTab(getEventsPage(),
 		          "PodCasts");
 		return menuSheet;
 	}
 	
-	private Component getEventsPage() {
-		HorizontalLayout eventsLayout=new HorizontalLayout();
-		eventsLayout.setSizeFull();
-		eventsLayout.setStyleName("playerbackground");
-		return eventsLayout;
-	}
-	private Component getContactPage() {
-		HorizontalLayout contactLayout=new HorizontalLayout();
-		contactLayout.setSizeFull();
-		contactLayout.setStyleName("playerbackground");		
-		return contactLayout;
-	}
 	private Component getContentBar(){
 		 contentBar.setStyleName("contentbar");
 		 contentBar.setSizeFull();
@@ -121,8 +110,62 @@ public class PlayerView extends Panel implements View  {
 		
 	}
 	
+	private Component getEventsPage() {
+		HorizontalLayout eventsLayout=new HorizontalLayout();
+//		eventsLayout.setSizeFull();
+	eventsLayout.setHeight("600px");
+	eventsLayout.setWidth("1400px");
+		eventsLayout.setStyleName("contentbar");
+		return eventsLayout;
+	}
+	private Component getContactPage() {
+		HorizontalLayout contactLayout=new HorizontalLayout();
+//		contactLayout.setSizeFull();
+		contactLayout.setHeight("600px");
+		contactLayout.setWidth("1400px");
+		contactLayout.setStyleName("contentbar");	
+		return contactLayout;
+	}
+	
+	private Component getRecordingsPage() {
+		HorizontalLayout recordingsLayout=new HorizontalLayout();
+//		contactLayout.setSizeFull();
+		recordingsLayout.setHeight("600px");
+		recordingsLayout.setWidth("1400px");
+		recordingsLayout.addComponent(getPlayList());
+		recordingsLayout.setStyleName("contentbar");	
+		return recordingsLayout;
+	}
+	private Component getDownloadsPage() {
+		HorizontalLayout downloadsLayout=new HorizontalLayout();
+//		contactLayout.setSizeFull();
+		downloadsLayout.setHeight("600px");
+		downloadsLayout.setWidth("1400px");
+		downloadsLayout.addComponent(getPlayList());
+		downloadsLayout.setStyleName("contentbar");	
+		return downloadsLayout;
+	}
+	private Component getPhotosPage() {
+		HorizontalLayout photosLayout=new HorizontalLayout();
+//		contactLayout.setSizeFull();
+		photosLayout.setHeight("600px");
+		photosLayout.setWidth("1400px");
+		photosLayout.setStyleName("contentbar");	
+		return photosLayout;
+	}
+	
+	private Component getVideosPage() {
+		HorizontalLayout videosLayout=new HorizontalLayout();
+//		contactLayout.setSizeFull();
+		videosLayout.setHeight("600px");
+		videosLayout.setWidth("1400px");
+		videosLayout.setStyleName("contentbar");	
+		return videosLayout;
+	}
+	
 	private Component getUserProfile(){
 		HorizontalLayout profileLayout=new HorizontalLayout();
+		profileLayout.setStyleName("contentbar");
 		Table profileTable=new Table();
 		profileTable.setHeight("400px");
 		profileTable.setWidth("250px");

@@ -46,6 +46,7 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 	
 	public RegisterView(final Navigator navigator) {
 		super();
+		setStyleName("contentbar");
 		this.addComponent(this.emailField);
 		this.addComponent(this.passwordField);
 		this.addComponent(this.retyped);
@@ -54,7 +55,7 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 		this.addComponent(this.register);
 		this.register.setEnabled(false);
 		
-		getAppUI().getNavigator().addView("",new StartView(navigator) );
+//		getAppUI().getNavigator().addView("",new StartView(navigator) );
 		
 		
 		for(Field<?> f: new Field<?>[]{this.emailField, this.passwordField, this.retyped, this.acceptTerms}) {
@@ -116,7 +117,7 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 				this.fieldGroup.commit();
 				this.register.setEnabled(false);
 				Notification.show("Your account has been created.");
-				getUI().getNavigator().navigateTo(StartView.NAME);
+				getUI().getNavigator().navigateTo(RegisterView.NAME);
 			} catch (CommitException e) {
 				e.printStackTrace();
 				Notification.show("The data could not be saved.", "Error message: "+e.getMessage(), Notification.Type.ERROR_MESSAGE);
