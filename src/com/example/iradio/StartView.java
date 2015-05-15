@@ -35,10 +35,7 @@ TextField emailField;
 PasswordField passwordField;
 final String path = "/resources";
 
-    public StartView() {
-    	
-    }        
-
+   
     public StartView(final Navigator navigator) {
         mainLayout = new VerticalLayout();
         mainLayout.setSizeFull();
@@ -47,7 +44,7 @@ final String path = "/resources";
         FormLayout loginForm=new FormLayout();
        this.ui=getAppUI();
        navigator.addView(PlayerView.NAME,new PlayerView(navigator) );
-       navigator.addView(RegisterView.NAME, new RegisterView());      
+       navigator.addView(RegisterView.NAME, new RegisterView(navigator));
       
        
       emailField = new TextField("Email");
@@ -66,7 +63,7 @@ final String path = "/resources";
                  password = passwordField.getValue();
             	if(username.equals("ram@gmail.com") && password.equals("rams")){
                 Notification.show("Welcome " + username);
-
+                getAppUI().setLoggedInUser(username);
                 ((IradioUI)UI.getCurrent()).setLoggedInUser(username);
                 getUI().getNavigator().navigateTo(PlayerView.NAME);
                 

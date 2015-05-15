@@ -9,6 +9,7 @@ import com.vaadin.data.Validator;
 import com.vaadin.data.fieldgroup.FieldGroup;
 import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
@@ -43,7 +44,7 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 	
 	private FieldGroup fieldGroup = new FieldGroup();
 	
-	public RegisterView() {
+	public RegisterView(final Navigator navigator) {
 		super();
 		this.addComponent(this.emailField);
 		this.addComponent(this.passwordField);
@@ -53,7 +54,7 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 		this.addComponent(this.register);
 		this.register.setEnabled(false);
 		
-		getAppUI().getNavigator().addView(StartView.NAME,new StartView() );
+		getAppUI().getNavigator().addView("",new StartView(navigator) );
 		
 		
 		for(Field<?> f: new Field<?>[]{this.emailField, this.passwordField, this.retyped, this.acceptTerms}) {

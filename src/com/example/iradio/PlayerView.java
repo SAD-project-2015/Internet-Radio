@@ -43,7 +43,7 @@ public class PlayerView extends Panel implements View  {
 		JFXPanel fxPanel = new JFXPanel();
 		fileList=new String[100];
 		layout = new VerticalLayout();
-		layout.setSizeFull();
+		layout.setStyleName("mainlayout");
 		 
 		  topBar=new HorizontalLayout();
 		  menuBar=new HorizontalLayout();	
@@ -54,7 +54,7 @@ public class PlayerView extends Panel implements View  {
 }
 	private Component getTopBar(){
 		
-		 Label title=new Label("Internet-Radio");
+		 Label title=new Label("Campus-Radio");
 		 title.setStyleName("title");
 		 topBar.addComponent(title);
 		 topBar.addStyleName("topBar");
@@ -70,7 +70,7 @@ public class PlayerView extends Panel implements View  {
 		         }
 		     });
 		     topBar.addComponent(logoutButton);
-		    topBar.setComponentAlignment(logoutButton, Alignment.TOP_RIGHT);		    
+		    topBar.setComponentAlignment(logoutButton, Alignment.BOTTOM_RIGHT);		    
 		    return topBar;
 	}
 	
@@ -81,38 +81,78 @@ public class PlayerView extends Panel implements View  {
 		
 		menuSheet.addTab(getContentBar(),"Radio");
 		
-		menuSheet.addTab(new Label("Contents of the first tab"),
+		menuSheet.addTab(getUserProfile(),
 		          "Profile");
-		menuSheet.addTab(new Label("Contents of the first tab"),
+		menuSheet.addTab(getPlayList(),
 		          "Recordings");		
-		menuSheet.addTab(new Label("Contents of the first tab"),
+		menuSheet.addTab(getPlayList(),
 		          "Downloads");
-		menuSheet.addTab(new Label("Contents of the first tab"),
+		menuSheet.addTab(getContactPage(),
 		          "Contact");
-		menuSheet.addTab(new Label("Contents of the first tab"),
+		menuSheet.addTab(getEventsPage(),
 		          "Events");
+		menuSheet.addTab(getEventsPage(),
+		          "Photos");
+		menuSheet.addTab(getEventsPage(),
+		          "Video-Seminars");
+		menuSheet.addTab(getEventsPage(),
+		          "PodCasts");
 		return menuSheet;
 	}
 	
+	private Component getEventsPage() {
+		HorizontalLayout eventsLayout=new HorizontalLayout();
+		eventsLayout.setSizeFull();
+		eventsLayout.setStyleName("playerbackground");
+		return eventsLayout;
+	}
+	private Component getContactPage() {
+		HorizontalLayout contactLayout=new HorizontalLayout();
+		contactLayout.setSizeFull();
+		contactLayout.setStyleName("playerbackground");		
+		return contactLayout;
+	}
 	private Component getContentBar(){
 		 contentBar.setStyleName("contentbar");
-		 contentBar.addComponent(new Label("This is Content Bar"));
 		 contentBar.setSizeFull();
 		contentBar.addComponent(getPlayer());
 	     contentBar.addComponent(getPlayList());
 		return contentBar;
 		
 	}
+	
+	private Component getUserProfile(){
+		HorizontalLayout profileLayout=new HorizontalLayout();
+		Table profileTable=new Table();
+		profileTable.setHeight("400px");
+		profileTable.setWidth("250px");
+		profileTable.setSizeUndefined();
+		profileTable.addContainerProperty("Detail", String.class, null);
+		profileTable.addContainerProperty("Value", String.class, null);
+profileTable.addItem(new Object[]{"Name :",""},1);
+profileTable.addItem(new Object[]{"User Name :",""},2);
+profileTable.addItem(new Object[]{"Password :","******"},3);
+profileTable.addItem(new Object[]{"Email Id:",""},4);
+profileTable.addItem(new Object[]{"Date Of Birth :",""},5);
+profileTable.addItem(new Object[]{"Nationality :",""},6);
+profileTable.addItem(new Object[]{"Matriculation Number :"},7);
+profileLayout.addComponent(profileTable);
+		return profileLayout;
+	}
 	private Component getPlayList() {
 		  getFileListFromFolder();
 		playList=new Table("PlayList");
+		playList.setHeight("400px");
 		playList.setWidth("300px");
-		playList.setHeight("600px");
+		playList.setSelectable(true);
+		playList.setSortEnabled(false);
+		playList.setStyleName("tracklist");
 		playList.setPageLength(playList.size());
 		playList.addContainerProperty("Song", String.class, null);
+		playList.addContainerProperty("No.", String.class, null);
 		int m=0;
 		for(String song:fileList){
-			playList.addItem(new Object[]{song},m);
+			playList.addItem(new Object[]{song,String.valueOf(m+1)},m);
 			m++;
 		}
 		return playList;
@@ -206,5 +246,8 @@ public class PlayerView extends Panel implements View  {
 	public void enter(ViewChangeEvent event) {
 		
 	}	
+	 IradioUI getAppUI() {
+			return (IradioUI) UI.getCurrent();
+		}
 
 }
