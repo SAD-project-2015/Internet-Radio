@@ -38,7 +38,6 @@ final String path = "/resources";
    
     public StartView(final Navigator navigator) {
         mainLayout = new VerticalLayout();
-        mainLayout.setSizeFull();
         mainLayout.setStyleName("backgroundimage");
         
         FormLayout loginForm=new FormLayout();
@@ -49,11 +48,11 @@ final String path = "/resources";
        
       emailField = new TextField("Email");
         loginForm.addComponent(emailField);
-        emailField.setStyleName("labelblue");
+        emailField.setStyleName("labelred");
         
 
        passwordField = new PasswordField("Password");
-       passwordField.setStyleName("labelblue");
+       passwordField.setStyleName("labelred");
         loginForm.addComponent(passwordField);
 
         final Button loginButton = new Button("Login", new Button.ClickListener() {
@@ -61,7 +60,7 @@ final String path = "/resources";
             public void buttonClick(ClickEvent event) {
             	 username = emailField.getValue();
                  password = passwordField.getValue();
-            	if(username.equals("ram@gmail.com") && password.equals("rams")){
+            	if(username.equals("test@test.com") && password.equals("test12345")){
                 Notification.show("Welcome " + username);
                 getAppUI().setLoggedInUser(username);
                 ((IradioUI)UI.getCurrent()).setLoggedInUser(username);
@@ -77,42 +76,45 @@ final String path = "/resources";
             	 navigator.navigateTo(RegisterView.NAME);
             	
             }
+        }); 
+        
+        final Button guestButton = new Button("Continue As Guest", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            	 navigator.navigateTo(PlayerView.NAME);
+            	
+            }
         });   
         
         final Button cancelButton = new Button("Cancel", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-            	
-            }
+            	            }
         });    
         
         HorizontalLayout buttonsContainer=new HorizontalLayout();
         buttonsContainer.addComponent(loginButton);
         buttonsContainer.addComponent(cancelButton);
-        buttonsContainer.addComponent(registerButton);
-        buttonsContainer.setComponentAlignment(registerButton, Alignment.BOTTOM_CENTER);
+        Label note=new Label("Login with Username:test@test.com and Password:test12345 to use the application");
+        note.setStyleName("labelwhite");
+        buttonsContainer.addComponent(note);
+//        buttonsContainer.addComponent(registerButton);
+//        buttonsContainer.addComponent(guestButton);
+//        buttonsContainer.setComponentAlignment(registerButton, Alignment.BOTTOM_CENTER);
         buttonsContainer.setSpacing(true);
         loginForm.addComponent(buttonsContainer);
         loginForm.setComponentAlignment(buttonsContainer, Alignment.MIDDLE_CENTER);
         loginForm.setSpacing(true);
         mainLayout.addComponent(loginForm);
         mainLayout.setComponentAlignment(loginForm, Alignment.MIDDLE_CENTER);
-//        mainLayout.addComponent(getImageComponent());
+        buttonsContainer.addComponent(registerButton);
+        buttonsContainer.addComponent(new Label("OR"));
+        buttonsContainer.addComponent(guestButton);
+        buttonsContainer.setComponentAlignment(registerButton, Alignment.BOTTOM_RIGHT);
               setCompositionRoot(mainLayout);
 
     }
     
-    public HorizontalLayout getImageComponent(){
-    	HorizontalLayout imgLayout=new HorizontalLayout();
-    	FileResource resource = new FileResource(new File(this.getClass().getClassLoader().getResource(path +"/srh.jpg").toString()));
-
-         Image image = new Image("Image from file", resource);
-         imgLayout.setSizeUndefined();
-         imgLayout.addComponent(image);
-         imgLayout.setStyleName("backgroundimage");
-    	return imgLayout;
-    }
-
     @Override
     public void enter(ViewChangeEvent event) {
     	emailField.focus();
