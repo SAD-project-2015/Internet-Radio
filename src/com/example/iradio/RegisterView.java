@@ -11,24 +11,29 @@ import com.vaadin.data.fieldgroup.FieldGroup.CommitException;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  *
  * @author PC
  */
-public class RegisterView extends FormLayout implements View, Button.ClickListener {
+public class RegisterView extends CustomComponent implements View, Button.ClickListener {
+	
+	
+	private static final long serialVersionUID = 7291111590350468701L;
+
+	FormLayout registerLayout;
 
 	 public static final String NAME = "register";
 
@@ -45,18 +50,18 @@ public class RegisterView extends FormLayout implements View, Button.ClickListen
 	private FieldGroup fieldGroup = new FieldGroup();
 	
 	public RegisterView(final Navigator navigator) {
-		super();
-		setStyleName("contentbar");
-		this.addComponent(this.emailField);
-		this.addComponent(this.passwordField);
-		this.addComponent(this.retyped);
-		this.addComponent(this.acceptTerms);
+//		super(registerLayout);
+		registerLayout=new FormLayout();
+//		super();
 		
-		this.addComponent(this.register);
-		this.register.setEnabled(false);
-		
-//		getAppUI().getNavigator().addView("",new StartView(navigator) );
-		
+		registerLayout.setStyleName("registerpage");
+		registerLayout.addComponent(emailField);
+		registerLayout.addComponent(passwordField);
+		registerLayout.addComponent(retyped);
+		registerLayout.addComponent(acceptTerms);
+		registerLayout.addComponent(register);
+		register.setEnabled(false);
+		setCompositionRoot(registerLayout);
 		
 		for(Field<?> f: new Field<?>[]{this.emailField, this.passwordField, this.retyped, this.acceptTerms}) {
 			f.setRequired(true);

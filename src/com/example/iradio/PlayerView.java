@@ -40,7 +40,7 @@ public class PlayerView extends Panel implements View  {
 		 final String path = "/audio";
 	@SuppressWarnings({ "unused" })
 	public	PlayerView(Navigator navigator){
-		JFXPanel fxPanel = new JFXPanel();
+	final	JFXPanel fxPanel = new JFXPanel();
 		fileList=new String[100];
 		layout = new VerticalLayout();
 		layout.setStyleName("mainlayout");
@@ -69,7 +69,7 @@ public class PlayerView extends Panel implements View  {
 		             logoutButton.setCaption("Logout");
 		         }
 		     });
-		 logoutButton.setStyleName("logout");
+		 logoutButton.setStyleName("logoutbutton");
 		     topBar.addComponent(logoutButton);
 		    topBar.setComponentAlignment(logoutButton, Alignment.BOTTOM_RIGHT);		    
 		    return topBar;
