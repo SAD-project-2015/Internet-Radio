@@ -98,6 +98,8 @@ public class PlayerView extends Panel implements View  {
 		          "Video-Seminars");
 		menuSheet.addTab(getEventsPage(),
 		          "PodCasts");
+		menuSheet.addTab(getEventsPage(),
+		          "Contact");
 		return menuSheet;
 	}
 	
