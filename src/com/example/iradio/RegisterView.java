@@ -50,9 +50,7 @@ public class RegisterView extends CustomComponent implements View, Button.ClickL
 	private FieldGroup fieldGroup = new FieldGroup();
 	
 	public RegisterView(final Navigator navigator) {
-//		super(registerLayout);
 		registerLayout=new FormLayout();
-//		super();
 		
 		registerLayout.setStyleName("registerpage");
 		registerLayout.addComponent(emailField);
